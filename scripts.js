@@ -5,7 +5,7 @@ container.style.height = containerWidth + 'px';
 
 let grid;
 let box;
-let color = 'black';
+let color = [0, 0, 0]; // [red, green, blue] representation
 
 makeGrid(16);
 enableHoverToFill();
@@ -50,9 +50,9 @@ function enableHoverToFill() {
     nodeOfDivs.forEach(div => {
         div.addEventListener('mouseover', event => {
             if (color === 'Random') {
-                event.target.style.backgroundColor = `rgb(${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, ${getRandomInt(0, 255)})`;
+                event.target.style.backgroundColor = makeRGB([getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)]);
             } else {
-                event.target.style.backgroundColor = color;
+                event.target.style.backgroundColor = makeRGB(color);
             }
         });
     });
@@ -84,4 +84,8 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     // The maximum is exclusive and the minimum is inclusive
     return Math.floor(Math.random() * (max - min) + min);
+}
+
+function makeRGB(rgb) {
+    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 }
