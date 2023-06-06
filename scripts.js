@@ -5,7 +5,7 @@ container.style.height = containerWidth + 'px';
 
 let grid;
 let box;
-let color = [0, 0, 0]; // [red, green, blue] representation
+let color = '#000000';
 
 makeGrid(16);
 enableHoverToFill();
@@ -50,9 +50,9 @@ function enableHoverToFill() {
     nodeOfDivs.forEach(div => {
         div.addEventListener('mouseover', event => {
             if (color === 'Random') {
-                event.target.style.backgroundColor = makeRGB([getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)]);
+                event.target.style.backgroundColor = rgbToHex(getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255));
             } else {
-                event.target.style.backgroundColor = makeRGB(color);
+                event.target.style.backgroundColor = color;
             }
         });
     });
@@ -86,9 +86,10 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-function makeRGB(rgb) {
-    for (let i = 0; i < 3; i++) {
-        rgb[i] = rgb[i] < 0 ? 0 : (rgb[i] > 255 ? 255 : rgb[i]);
+function rgbToHex(r, g, b) {
+    function componentToHex(c) {
+        let hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
     }
-    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
