@@ -5,7 +5,8 @@ container.style.height = containerWidth + 'px';
 
 let grid;
 let box;
-let color = '#000000';
+let brush;
+let color = [0, 0, 0]; // [red, green, blue] representation
 
 makeGrid(16);
 enableHoverToFill();
@@ -25,7 +26,7 @@ function makeGrid(size) {
 
     box = document.createElement('div')
     box.classList.add('box');
-    box.setAttribute('style', `width:${containerWidth / size}px; height:${containerWidth / size}px;`)
+    box.setAttribute('style', `width:${containerWidth / size}px; height:${containerWidth / size}px; background-color: rgb(255,255,255)`)
 
     for (let i = 0; i < size; i++) {
         grid.appendChild(box.cloneNode(true));
@@ -49,11 +50,14 @@ function enableHoverToFill() {
     const nodeOfDivs = document.querySelectorAll('.box');
     nodeOfDivs.forEach(div => {
         div.addEventListener('mouseover', event => {
-            if (color === 'Random') {
-                event.target.style.backgroundColor = rgbToHex(getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255));
-            } else {
-                event.target.style.backgroundColor = color;
+            if (brush === 'Random') {
+                color = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
+            } else if (brush === 'Darken') {
+                color = adjustRGB(parseRGBStringToRGBArray(div.style.backgroundColor), 0.9);
+            } else if (brush === 'Lighten') {
+                color = adjustRGB(parseRGBStringToRGBArray(div.style.backgroundColor), 1.1);
             }
+            event.target.style.backgroundColor = makeRGB(color);
         });
     });
 }
@@ -86,10 +90,29 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-function rgbToHex(r, g, b) {
-    function componentToHex(c) {
-        let hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
+function makeRGB(rgb) {
+    for (let i = 0; i < 3; i++) {
+        rgb[i] = rgb[i] < 0 ? 0 : (rgb[i] > 255 ? 255 : rgb[i]);
     }
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
+
+function adjustRGB(rgb, multiplier = 1) {
+    for (let i = 0; i < 3; i++) {
+        rgb[i] = Math.ceil((rgb[i]) * multiplier) + 1;
+    }
+    return rgb;
+}
+
+function parseRGBStringToRGBArray(rgbString) {
+    // replace all " " to ""
+    rgbString = rgbString.replace(/\s+/g, '');
+
+    // parse "rgb(r,g,b)" to [r,g,b]
+    rgbString = rgbString.split("(")[1].split(")")[0];
+    rgbString = rgbString.split(",");
+    for (let i = 0; i < 3; i++) {
+        rgbString[0] = Number(rgbString[0]);
+    }
+    return rgbString
 }
