@@ -1,25 +1,36 @@
 const container = document.querySelector('#container');
-const containerWidth = 600
+const containerWidth = 600;
 
-let n;
 let grid;
+let column;
+let color = "orange";
 
-n = 16;
+makeGrid(16);
+hoverToFill();
 
-grid = document.createElement('div');
-grid.classList.add('grid');
-grid.setAttribute('style', `width:${containerWidth}px; height:${containerWidth/n}px;`)
+function makeGrid(size) {
+    grid = document.createElement('div');
+    grid.classList.add('grid');
+    grid.setAttribute('style', `width:${containerWidth}px; height:${containerWidth / size}px;`)
 
-column = document.createElement('div')
-column.classList.add('column');
-column.setAttribute('style', `width:${containerWidth/n}px; height:${containerWidth/n}px;`)
+    column = document.createElement('div')
+    column.classList.add('column');
+    column.setAttribute('style', `width:${containerWidth / size}px; height:${containerWidth / size}px;`)
 
-for (let i = 0; i < n; i++) {
-    column = column.cloneNode(true);
-    grid.appendChild(column);
+    for (let i = 0; i < size; i++) {
+        grid.appendChild(column.cloneNode(true));
+    }
+
+    for (let i = 0; i < size; i++) {
+        container.appendChild(grid.cloneNode(true));
+    }
 }
 
-for (let i = 0; i < n; i++) {
-    grid = grid.cloneNode(true);
-    container.appendChild(grid);
+function hoverToFill() {
+    const nodeOfDivs = document.querySelectorAll('.column');
+    nodeOfDivs.forEach(div => {
+        div.addEventListener('mouseover', event => {
+            event.target.style.backgroundColor = color;
+        })
+    })
 }

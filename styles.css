@@ -1,7 +1,7 @@
 #container {
     width: 600px;
     height: 600px;
-    border: 1px solid green;
+    border: 2px solid green;
 }
 
 .grid {
@@ -10,5 +10,6 @@
 }
 
 .column {
-    border: 1px solid green;
+    border: 0px solid green;
+    background-color: white;
 }
