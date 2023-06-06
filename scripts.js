@@ -87,5 +87,8 @@ function getRandomInt(min, max) {
 }
 
 function makeRGB(rgb) {
+    for (let i = 0; i < 3; i++) {
+        rgb[i] = rgb[i] < 0 ? 0 : (rgb[i] > 255 ? 255 : rgb[i]);
+    }
     return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 }
