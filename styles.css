@@ -6,7 +6,7 @@
     display: flex;
 }
 
-.column {
+.box {
     border-top: 1px solid grey;
     border-right: 1px solid grey;
     background-color: white;

@@ -4,7 +4,7 @@ container.style.width = containerWidth + 'px';
 container.style.height = containerWidth + 'px';
 
 let grid;
-let column;
+let box;
 let color = 'black';
 
 makeGrid(16);
@@ -23,12 +23,12 @@ function makeGrid(size) {
     grid.classList.add('grid');
     grid.setAttribute('style', `width:${containerWidth}px; height:${containerWidth / size}px;`)
 
-    column = document.createElement('div')
-    column.classList.add('column');
-    column.setAttribute('style', `width:${containerWidth / size}px; height:${containerWidth / size}px;`)
+    box = document.createElement('div')
+    box.classList.add('box');
+    box.setAttribute('style', `width:${containerWidth / size}px; height:${containerWidth / size}px;`)
 
     for (let i = 0; i < size; i++) {
-        grid.appendChild(column.cloneNode(true));
+        grid.appendChild(box.cloneNode(true));
     }
 
     for (let i = 0; i < size; i++) {
@@ -46,7 +46,7 @@ function removeGrid() {
 }
 
 function enableHoverToFill() {
-    const nodeOfDivs = document.querySelectorAll('.column');
+    const nodeOfDivs = document.querySelectorAll('.box');
     nodeOfDivs.forEach(div => {
         div.addEventListener('mouseover', event => {
             event.target.style.backgroundColor = color;
