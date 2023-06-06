@@ -1,13 +1,13 @@
 #container {
-    border: 2px solid green;
+    border: 10px solid grey;
 }
 
 .grid {
-    border: 0px solid red;
     display: flex;
 }
 
 .column {
-    border: 0px solid green;
+    border-top: 1px solid grey;
+    border-right: 1px solid grey;
     background-color: white;
 }
