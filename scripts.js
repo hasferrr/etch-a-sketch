@@ -1,5 +1,7 @@
 const container = document.querySelector('#container');
 const containerWidth = 600;
+container.style.width = containerWidth + 'px';
+container.style.height = containerWidth + 'px';
 
 let grid;
 let column;
