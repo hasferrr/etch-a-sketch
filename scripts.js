@@ -12,8 +12,8 @@ enableHoverToFill();
 enableChangeSizeButton();
 
 function makeGrid(size) {
-    if (size > 50) {
-        size = 50;
+    if (size > 64) {
+        size = 64;
     } else if (size < 1) {
         size = 1;
     }
@@ -49,7 +49,11 @@ function enableHoverToFill() {
     const nodeOfDivs = document.querySelectorAll('.box');
     nodeOfDivs.forEach(div => {
         div.addEventListener('mouseover', event => {
-            event.target.style.backgroundColor = color;
+            if (color === 'Random') {
+                event.target.style.backgroundColor = `rgb(${getRandomInt(0, 255)}, ${getRandomInt(0, 255)}, ${getRandomInt(0, 255)})`;
+            } else {
+                event.target.style.backgroundColor = color;
+            }
         });
     });
 }
@@ -63,7 +67,7 @@ function enableChangeSizeButton() {
             if (size === null) {
                 return;
             }
-        } while (typeof(size) !== "number" && size === NaN);
+        } while (typeof (size) !== "number" && size === NaN);
         removeGrid();
         changeGridText(makeGrid(size)); // makeGrid() is side effect and return the size of grid
         enableHoverToFill();
@@ -73,4 +77,11 @@ function enableChangeSizeButton() {
 function changeGridText(size) {
     const gridText = document.querySelector(".grid-text");
     gridText.textContent = `${size} x ${size} grid`;
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    // The maximum is exclusive and the minimum is inclusive
+    return Math.floor(Math.random() * (max - min) + min);
 }
