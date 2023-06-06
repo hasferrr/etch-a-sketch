@@ -1,0 +1,14 @@
+#container {
+    width: 600px;
+    height: 600px;
+    border: 1px solid green;
+}
+
+.grid {
+    border: 0px solid red;
+    display: flex;
+}
+
+.column {
+    border: 1px solid green;
+}
