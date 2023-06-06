@@ -53,9 +53,9 @@ function enableHoverToFill() {
             if (brush === 'Random') {
                 color = [getRandomInt(0, 255), getRandomInt(0, 255), getRandomInt(0, 255)];
             } else if (brush === 'Darken') {
-                color = adjustRGB(parseRGBStringToRGBArray(div.style.backgroundColor), 0.9);
+                color = adjustRGB(parseRGBStringToRGBArray(div.style.backgroundColor), 0.9, -10);
             } else if (brush === 'Lighten') {
-                color = adjustRGB(parseRGBStringToRGBArray(div.style.backgroundColor), 1.1);
+                color = adjustRGB(parseRGBStringToRGBArray(div.style.backgroundColor), 1.1, 15);
             }
             event.target.style.backgroundColor = makeRGB(color);
         });
@@ -97,9 +97,10 @@ function makeRGB(rgb) {
     return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 }
 
-function adjustRGB(rgb, multiplier = 1) {
+function adjustRGB(rgb, multiplier = 1, additional = 0) {
     for (let i = 0; i < 3; i++) {
-        rgb[i] = Math.ceil((rgb[i]) * multiplier) + 1;
+        rgb[i] = Number(rgb[i]);
+        rgb[i] = Math.ceil(rgb[i] < 100 ? rgb[i] * multiplier + additional : rgb[i] * multiplier);
     }
     return rgb;
 }
@@ -111,8 +112,5 @@ function parseRGBStringToRGBArray(rgbString) {
     // parse "rgb(r,g,b)" to [r,g,b]
     rgbString = rgbString.split("(")[1].split(")")[0];
     rgbString = rgbString.split(",");
-    for (let i = 0; i < 3; i++) {
-        rgbString[0] = Number(rgbString[0]);
-    }
     return rgbString
 }
