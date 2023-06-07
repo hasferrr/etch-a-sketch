@@ -3,14 +3,18 @@ const containerWidth = 600;
 container.style.width = containerWidth + 'px';
 container.style.height = containerWidth + 'px';
 
-let grid;
-let box;
+let size = 16;
 let brush;
 let color = [0, 0, 0]; // [red, green, blue] representation
 
-makeGrid(16);
+makeGrid(size);
 enableHoverToFill();
 enableChangeSizeButton();
+
+function setSize(size0) {
+    // global size setter
+    size = size0;
+}
 
 function makeGrid(size) {
     if (size > 64) {
@@ -19,12 +23,13 @@ function makeGrid(size) {
         size = 1;
     }
     size = Math.floor(size);
+    setSize(size);
 
-    grid = document.createElement('div');
+    let grid = document.createElement('div');
     grid.classList.add('grid');
     grid.setAttribute('style', `width:${containerWidth}px; height:${containerWidth / size}px;`)
 
-    box = document.createElement('div')
+    let box = document.createElement('div')
     box.classList.add('box');
     box.setAttribute('style', `width:${containerWidth / size}px; height:${containerWidth / size}px; background-color: rgb(255,255,255)`)
 
