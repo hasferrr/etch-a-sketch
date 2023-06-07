@@ -19,7 +19,7 @@ function setSize(size0) {
 function makeGrid(size) {
     if (size > 64) {
         size = 64;
-    } else if (size < 1 || Number.isNaN(size)) {
+    } else if (size < 1) {
         size = 1;
     }
     size = Math.floor(size);
@@ -72,11 +72,12 @@ function enableChangeSizeButton() {
     changeSizeButton.addEventListener('click', () => {
         let size;
         do {
-            size = Number(prompt("New Size: "));
+            size = prompt("New Size: ");
             if (size === null) {
                 return;
             }
-        } while (typeof (size) !== "number" || Number.isNaN(size));
+            size = Number(size);
+        } while (Number.isNaN(size));
         removeGrid();
         changeGridText(makeGrid(size)); // makeGrid() is side effect and return the size of grid
         enableHoverToFill();
