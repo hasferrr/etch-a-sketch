@@ -15,7 +15,7 @@ enableChangeSizeButton();
 function makeGrid(size) {
     if (size > 64) {
         size = 64;
-    } else if (size < 1) {
+    } else if (size < 1 || Number.isNaN(size)) {
         size = 1;
     }
     size = Math.floor(size);
@@ -67,11 +67,11 @@ function enableChangeSizeButton() {
     changeSizeButton.addEventListener('click', () => {
         let size;
         do {
-            size = prompt("New Size: ");
+            size = Number(prompt("New Size: "));
             if (size === null) {
                 return;
             }
-        } while (typeof (size) !== "number" && size === NaN);
+        } while (typeof (size) !== "number" || Number.isNaN(size));
         removeGrid();
         changeGridText(makeGrid(size)); // makeGrid() is side effect and return the size of grid
         enableHoverToFill();
@@ -111,6 +111,6 @@ function parseRGBStringToRGBArray(rgbString) {
 
     // parse "rgb(r,g,b)" to [r,g,b]
     rgbString = rgbString.split("(")[1].split(")")[0];
-    rgbString = rgbString.split(",");
-    return rgbString
+    const rgbArray = rgbString.split(",");
+    return rgbArray;
 }
