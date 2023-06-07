@@ -119,3 +119,10 @@ function parseRGBStringToRGBArray(rgbString) {
     const rgbArray = rgbString.split(",");
     return rgbArray;
 }
+
+function clearColor() {
+    removeGrid();
+    makeGrid(size)
+    changeGridText(size);
+    enableHoverToFill();
+}
